@@ -1,0 +1,29 @@
+
+sw.js (service worker):
+```javascript
+const CACHE_NAME = 'donut-tracker-v1';
+const ASSETS = [
+  '/donut/',
+  '/donut/index.html',
+  '/donut/manifest.json',
+  '/donut/icons/icon-192x192.png',
+  '/donut/icons/icon-512x512.png',
+  'https://cdn.tailwindcss.com',
+  'https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400;700&family=Comic+Neue:wght@400;700&display=swap',
+  'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8a24f64e-b30c-4517-b377-bef33d65d16d.png',
+  'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/076bb821-f656-41d6-beb1-23ce63ac5abd.png'
+];
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+  );
+});
