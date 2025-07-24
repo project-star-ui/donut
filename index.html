@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Donut Tracker</title>
+    <meta name="theme-color" content="#6a3093">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/donut/manifest.json">
+    <link rel="apple-touch-icon" href="/donut/icons/icon-192x192.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400;700&family=Comic+Neue:wght@400;700&display=swap');
@@ -49,23 +54,23 @@
     </style>
 </head>
 <body class="min-h-screen">
-    <div class="donut-bg py-10 px-4">
+    <div class="donut-bg py-6 px-3 sm:py-10 sm:px-4">
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-10">
-                <h1 class="text-5xl font-bold text-purple-800 mb-2" style="color: #6a3093;">🍩 Mini Donut Factory 🍩</h1>
-                <p class="text-xl text-purple-700 tracking-wide">🌈 Track your magical donut sales! 🌈</p>
+                <h1 class="text-3xl md:text-5xl font-bold text-purple-800 mb-2" style="color: #6a3093;">🍩 Mini Donut Factory 🍩</h1>
+                <p class="text-base md:text-xl text-purple-700 tracking-wide">🌈 Track your magical donut sales! 🌈</p>
             </div>
             
             <!-- Order Form -->
             <div class="bg-purple-100 rounded-3xl p-6 shadow-xl mb-10" style="background-color: #b19cd9;">
                 <h2 class="text-3xl font-bold text-pink-500 mb-6 text-center">Add New Order</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                     <!-- Flavor Selection -->
                     <div class="donut-card bg-pink-50 p-4 rounded-2xl relative">
                         <label class="block text-purple-700 font-bold mb-2">Flavor</label>
-                        <select id="flavor" class="w-full p-2 rounded-lg border-4 border-purple-300 focus:border-purple-500 focus:outline-none font-bold" style="background-color: #e9d8fd;">
+                        <select id="flavor" class="w-full p-1 md:p-2 rounded-lg border-2 md:border-4 border-purple-300 focus:border-purple-500 focus:outline-none font-bold" style="background-color: #e9d8fd;">
                             <option value="">Select Flavor</option>
                             <option value="Chocolate">Chocolate</option>
                             <option value="White Chocolate">White Chocolate</option>
@@ -110,7 +115,7 @@
                 </div>
                 
                 <div class="mt-6 text-center">
-                    <button id="addOrder" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-full text-xl transition duration-300 transform hover:scale-110 hover:shadow-lg" style="background-color: #9370db;">
+                    <button id="addOrder" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-full text-base md:text-xl transition duration-300 transform hover:scale-105 md:hover:scale-110 hover:shadow-lg" style="background-color: #9370db;">
                         Add to Orders
                     </button>
                 </div>
@@ -119,7 +124,7 @@
             <!-- Orders Table -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
                 <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">Today's Orders</h2>
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto text-sm md:text-base">
                     <table class="w-full table-auto">
                         <thead>
                             <tr class="bg-pink-100">
@@ -139,7 +144,7 @@
             </div>
             
             <!-- Financial Summary -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-2">
                 <!-- Daily Summary -->
                 <div class="bg-white rounded-3xl p-6 shadow-xl">
                     <h2 class="text-3xl font-bold text-pink-500 mb-4 text-center">Daily Summary</h2>
@@ -570,6 +575,19 @@
 
     // 🚀 Load orders on initial page load
     loadOrdersFromFirebase();
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/donut/sw.js')
+                .then(registration => {
+                    console.log('ServiceWorker registration successful');
+                })
+                .catch(err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+        });
+    }
 </script>
 </body>
 </html>
