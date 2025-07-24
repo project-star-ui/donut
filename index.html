@@ -6,11 +6,11 @@
     <title>Mini Donut Tracker</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400;700&family=Comic+Neue:wght@400;700&display=swap');
         
         body {
-            font-family: 'Comic Neue', cursive;
-            background-color: #FFF5F5;
+            font-family: 'Fredoka One', 'Comic Neue', arial;
+            background-color: #E6E6FA;
         }
         
         .donut-bg {
@@ -33,6 +33,13 @@
         .floating {
             animation: floating 3s ease-in-out infinite;
         }
+        body {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23b19cd9" d="M12 2L2 7v10l10 5 10-5V7L12 2z"/></svg>'), auto;
+        }
+        button:hover {
+            transform: scale(1.1) rotate(5deg);
+            transition: all 0.3s ease;
+        }
         
         @keyframes floating {
             0% { transform: translateY(0px); }
@@ -46,19 +53,19 @@
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-10">
-                <h1 class="text-5xl font-bold text-pink-600 mb-2">🍩 Mini Donut Business</h1>
-                <p class="text-xl text-purple-800">Track your delicious donut sales!</p>
+                <h1 class="text-5xl font-bold text-purple-800 mb-2" style="color: #6a3093;">🍩 Mini Donut Factory 🍩</h1>
+                <p class="text-xl text-purple-700 tracking-wide">🌈 Track your magical donut sales! 🌈</p>
             </div>
             
             <!-- Order Form -->
-            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+            <div class="bg-purple-100 rounded-3xl p-6 shadow-xl mb-10" style="background-color: #b19cd9;">
                 <h2 class="text-3xl font-bold text-pink-500 mb-6 text-center">Add New Order</h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Flavor Selection -->
                     <div class="donut-card bg-pink-50 p-4 rounded-2xl relative">
                         <label class="block text-purple-700 font-bold mb-2">Flavor</label>
-                        <select id="flavor" class="w-full p-2 rounded-lg border-2 border-pink-300 focus:border-pink-500 focus:outline-none">
+                        <select id="flavor" class="w-full p-2 rounded-lg border-4 border-purple-300 focus:border-purple-500 focus:outline-none font-bold" style="background-color: #e9d8fd;">
                             <option value="">Select Flavor</option>
                             <option value="Chocolate">Chocolate</option>
                             <option value="White Chocolate">White Chocolate</option>
@@ -86,24 +93,24 @@
                         <label class="block text-orange-700 font-bold mb-2">Quantity</label>
                         <select id="quantity" class="w-full p-2 rounded-lg border-2 border-yellow-300 focus:border-yellow-500 focus:outline-none">
                             <option value="">Select Quantity</option>
-                            <option value="1">1 PC (₱8)</option>
-                            <option value="2">2 PCS (₱16)</option>
-                            <option value="3">3 PCS (₱25)</option>
-                            <option value="4">4 PCS (₱32)</option>
-                            <option value="5">5 PCS (₱40)</option>
-                            <option value="6">6 PCS (₱50)</option>
-                            <option value="7">7 PCS (₱56)</option>
-                            <option value="8">8 PCS (₱64)</option>
-                            <option value="9">9 PCS (₱72)</option>
-                            <option value="10">10 PCS (₱80)</option>
-                            <option value="11">11 PCS (₱88)</option>
-                            <option value="12">12 PCS (₱96)</option>
+                            <option value="1">1 PC (₱9)</option>
+                            <option value="2">2 PCS (₱18)</option>
+                            <option value="3">3 PCS (₱20)</option>
+                            <option value="4">4 PCS (₱36)</option>
+                            <option value="5">5 PCS (₱45)</option>
+                            <option value="6">6 PCS (₱40)</option>
+                            <option value="7">7 PCS (₱63)</option>
+                            <option value="8">8 PCS (₱72)</option>
+                            <option value="9">9 PCS (₱81)</option>
+                            <option value="10">10 PCS (₱90)</option>
+                            <option value="11">11 PCS (₱99)</option>
+                            <option value="12">12 PCS (₱108)</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="mt-6 text-center">
-                    <button id="addOrder" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-full text-xl transition duration-300 transform hover:scale-105">
+                    <button id="addOrder" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-full text-xl transition duration-300 transform hover:scale-110 hover:shadow-lg" style="background-color: #9370db;">
                         Add to Orders
                     </button>
                 </div>
@@ -258,19 +265,20 @@
 
     // Updated priceMap to handle 8 pesos per piece, with special prices for 3 and 6
     const priceMap = {
-        '1': 8,
-        '2': 16,
-        '3': 25, // Special price
-        '4': 32,
-        '5': 40,
-        '6': 50, // Special price
-        '7': 56,
-        '8': 64,
-        '9': 72,
-        '10': 80,
-        '11': 88,
-        '12': 96
+        '1': 9,
+        '2': 18,
+        '3': 20, // Changed to ₱20
+        '4': 36,
+        '5': 45,
+        '6': 40, // Changed to ₱40
+        '7': 63,
+        '8': 72,
+        '9': 81,
+        '10': 90,
+        '11': 99,
+        '12': 108
     };
+
 
     const flavorSelect = document.getElementById('flavor');
     const toppingSelect = document.getElementById('topping');
@@ -378,7 +386,7 @@
 
         todaysOrders.forEach((order, index) => {
             const row = document.createElement('tr');
-            row.className = 'border-b border-pink-100 hover:bg-pink-50';
+            row.className = 'border-b-4 border-purple-200 hover:bg-purple-100 transition-all duration-200';
             row.innerHTML = `
                 <td class="px-4 py-3">${order.flavor}</td>
                 <td class="px-4 py-3">${order.topping}</td>
