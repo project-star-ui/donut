@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Donut Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background-color: #FFF5F5;
+        }
+        
+        .donut-bg {
+            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8a24f64e-b30c-4517-b377-bef33d65d16d.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        
+        .donut-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .donut-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div class="donut-bg py-10 px-4">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-10">
+                <h1 class="text-5xl font-bold text-pink-600 mb-2">🍩 Mini Donut Business</h1>
+                <p class="text-xl text-purple-800">Track your delicious donut sales!</p>
+            </div>
+            
+            <!-- Order Form -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-pink-500 mb-6 text-center">Add New Order</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Flavor Selection -->
+                    <div class="donut-card bg-pink-50 p-4 rounded-2xl relative">
+                        <label class="block text-purple-700 font-bold mb-2">Flavor</label>
+                        <select id="flavor" class="w-full p-2 rounded-lg border-2 border-pink-300 focus:border-pink-500 focus:outline-none">
+                            <option value="">Select Flavor</option>
+                            <option value="Chocolate">Chocolate</option>
+                            <option value="White Chocolate">White Chocolate</option>
+                            <option value="Ube">Ube</option>
+                            <option value="Matcha">Matcha</option>
+                            <option value="Strawberry">Strawberry</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Topping Selection -->
+                    <div class="donut-card bg-purple-50 p-4 rounded-2xl relative">
+                        <label class="block text-pink-700 font-bold mb-2">Topping</label>
+                        <select id="topping" class="w-full p-2 rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none">
+                            <option value="">Select Topping</option>
+                            <option value="Sprinkles">Sprinkles</option>
+                            <option value="Mallows">Mallows</option>
+                            <option value="Crushed Oreo">Crushed Oreo</option>
+                            <option value="Nips">Nips</option>
+                            <option value="Kisses">Kisses</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Quantity Selection -->
+                    <div class="donut-card bg-yellow-50 p-4 rounded-2xl relative">
+                        <label class="block text-orange-700 font-bold mb-2">Quantity</label>
+                        <select id="quantity" class="w-full p-2 rounded-lg border-2 border-yellow-300 focus:border-yellow-500 focus:outline-none">
+                            <option value="">Select Quantity</option>
+                            <option value="1">1 PC (₱8)</option>
+                            <option value="2">2 PCS (₱16)</option>
+                            <option value="3">3 PCS (₱25)</option>
+                            <option value="4">4 PCS (₱32)</option>
+                            <option value="5">5 PCS (₱40)</option>
+                            <option value="6">6 PCS (₱50)</option>
+                            <option value="7">7 PCS (₱56)</option>
+                            <option value="8">8 PCS (₱64)</option>
+                            <option value="9">9 PCS (₱72)</option>
+                            <option value="10">10 PCS (₱80)</option>
+                            <option value="11">11 PCS (₱88)</option>
+                            <option value="12">12 PCS (₱96)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mt-6 text-center">
+                    <button id="addOrder" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-6 rounded-full text-xl transition duration-300 transform hover:scale-105">
+                        Add to Orders
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Orders Table -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">Today's Orders</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-pink-100">
+                                <th class="px-4 py-2 text-left">Flavor</th>
+                                <th class="px-4 py-2 text-left">Topping</th>
+                                <th class="px-4 py-2 text-left">Quantity</th>
+                                <th class="px-4 py-2 text-left">Price</th>
+                                <th class="px-4 py-2 text-left">Date</th>
+                                <th class="px-4 py-2 text-left">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTable">
+                            <!-- Orders will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Financial Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                <!-- Daily Summary -->
+                <div class="bg-white rounded-3xl p-6 shadow-xl">
+                    <h2 class="text-3xl font-bold text-pink-500 mb-4 text-center">Daily Summary</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-semibold text-purple-700">Total Sales:</span>
+                            <span id="totalSales" class="text-xl font-bold text-pink-600">0 ₱</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-semibold text-purple-700">Ingredients (60%):</span>
+                            <span id="ingredientsCost" class="text-xl font-bold text-green-600">0 ₱</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-semibold text-purple-700">Salary (40%):</span>
+                            <span id="salaryCost" class="text-xl font-bold text-blue-600">0 ₱</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Donut Visualization -->
+                <div class="bg-white rounded-3xl p-6 shadow-xl flex flex-col items-center justify-center">
+                    <h2 class="text-3xl font-bold text-purple-500 mb-4 text-center">Today's Donuts</h2>
+                    <div class="relative w-48 h-48">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/076bb821-f656-41d6-beb1-23ce63ac5abd.png" alt="Colorful assortment of mini donuts with various toppings arranged in a circle" class="w-full h-full object-contain floating" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Table -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">Order History</h2>
+                <div class="mb-4 flex items-center justify-center">
+                    <label for="historyDateFilter" class="block text-purple-700 font-bold mr-2">Filter by Date:</label>
+                    <input type="date" id="historyDateFilter" class="p-2 rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-purple-100">
+                                <th class="px-4 py-2 text-left">Flavor</th>
+                                <th class="px-4 py-2 text-left">Topping</th>
+                                <th class="px-4 py-2 text-left">Quantity</th>
+                                <th class="px-4 py-2 text-left">Price</th>
+                                <th class="px-4 py-2 text-left">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTable">
+                            <!-- History will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Financial History Table (Per Order) -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-pink-500 mb-6 text-center">Financial History (Per Order)</h2>
+                <div class="mb-4 flex items-center justify-center">
+                    <label for="financialHistoryDateFilter" class="block text-pink-700 font-bold mr-2">Filter by Date:</label>
+                    <input type="date" id="financialHistoryDateFilter" class="p-2 rounded-lg border-2 border-pink-300 focus:border-pink-500 focus:outline-none">
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-pink-100">
+                                <th class="px-4 py-2 text-left">Date</th>
+                                <th class="px-4 py-2 text-left">Flavor</th>
+                                <th class="px-4 py-2 text-left">Topping</th>
+                                <th class="px-4 py-2 text-left">Quantity</th>
+                                <th class="px-4 py-2 text-left">Total Price</th>
+                                <th class="px-4 py-2 text-left">Ingredients (60%)</th>
+                                <th class="px-4 py-2 text-left">Salary (40%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financialHistoryTable">
+                            <!-- Financial history will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Daily Financial History Table (Grand Total) -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">Daily Financial History (Grand Total)</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-purple-100">
+                                <th class="px-4 py-2 text-left">Date</th>
+                                <th class="px-4 py-2 text-left">Total Sales</th>
+                                <th class="px-4 py-2 text-left">Ingredients (60%)</th>
+                                <th class="px-4 py-2 text-left">Salary (40%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dailyFinancialHistoryTable">
+                            <!-- Daily financial history will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Firebase Configuration -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBapuhmZG_tLwgr3BpC_V2kpSFEpQAFntk",
+        authDomain: "newmessui.firebaseapp.com",
+        databaseURL: "https://newmessui-default-rtdb.firebaseio.com",
+        projectId: "newmessui",
+        storageBucket: "newmessui.firebasestorage.app",
+        messagingSenderId: "973290499288",
+        appId: "1:973290499288:web:09abf041c10188cee5bbad"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let orders = [];
+
+    // Updated priceMap to handle 8 pesos per piece, with special prices for 3 and 6
+    const priceMap = {
+        '1': 8,
+        '2': 16,
+        '3': 25, // Special price
+        '4': 32,
+        '5': 40,
+        '6': 50, // Special price
+        '7': 56,
+        '8': 64,
+        '9': 72,
+        '10': 80,
+        '11': 88,
+        '12': 96
+    };
+
+    const flavorSelect = document.getElementById('flavor');
+    const toppingSelect = document.getElementById('topping');
+    const quantitySelect = document.getElementById('quantity');
+    const addOrderBtn = document.getElementById('addOrder');
+    const ordersTable = document.getElementById('ordersTable');
+    const historyTable = document.getElementById('historyTable');
+    const totalSalesEl = document.getElementById('totalSales');
+    const ingredientsCostEl = document.getElementById('ingredientsCost');
+    const salaryCostEl = document.getElementById('salaryCost');
+    const historyDateFilter = document.getElementById('historyDateFilter');
+    const financialHistoryTable = document.getElementById('financialHistoryTable');
+    const financialHistoryDateFilter = document.getElementById('financialHistoryDateFilter');
+    const dailyFinancialHistoryTable = document.getElementById('dailyFinancialHistoryTable'); // New: Get reference to daily financial history table
+
+    function getCurrentDate() {
+        const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+        return new Date().toLocaleDateString('en-PH', options);
+    }
+
+    addOrderBtn.addEventListener('click', () => {
+        const flavor = flavorSelect.value;
+        const topping = toppingSelect.value;
+        const quantity = quantitySelect.value;
+        const date = getCurrentDate();
+
+        if (!flavor || !topping || !quantity) {
+            alert('Please select all options!');
+            return;
+        }
+
+        const price = priceMap[quantity]; // Price is now directly from the updated priceMap
+        const order = { flavor, topping, quantity, price, date };
+
+        orders.push(order);
+        updateOrdersTable();
+        updateFinancialSummary();
+        saveOrderToFirebase(order);
+        
+        // Update history table with current filter or all orders
+        const currentHistoryFilterDate = historyDateFilter.value;
+        if (currentHistoryFilterDate) {
+            const [year, month, day] = currentHistoryFilterDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateHistoryTable(formattedDate);
+        } else {
+            updateHistoryTable();
+        }
+
+        // Update financial history table with current filter or all orders
+        const currentFinancialFilterDate = financialHistoryDateFilter.value;
+        if (currentFinancialFilterDate) {
+            const [year, month, day] = currentFinancialFilterDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateFinancialHistoryTable(formattedDate);
+        } else {
+            updateFinancialHistoryTable();
+        }
+        updateDailyFinancialHistoryTable(); // New: Update daily financial history table
+
+        flavorSelect.value = '';
+        toppingSelect.value = '';
+        quantitySelect.value = '';
+    });
+
+    function saveOrderToFirebase(order) {
+        const newOrderRef = ref(db, 'orders/' + Date.now());
+        set(newOrderRef, order);
+    }
+
+    function loadOrdersFromFirebase() {
+        const dbRef = ref(db);
+        get(child(dbRef, 'orders')).then((snapshot) => {
+            if (snapshot.exists()) {
+                orders = Object.values(snapshot.val());
+                updateOrdersTable();
+                updateHistoryTable(); // Initial load of history table (no filter)
+                updateFinancialHistoryTable(); // Initial load of financial history table (no filter)
+                updateDailyFinancialHistoryTable(); // New: Initial load of daily financial history table
+                updateFinancialSummary();
+            } else {
+                console.log("No orders found.");
+            }
+        }).catch((error) => {
+            console.error("Error loading data:", error);
+        });
+    }
+
+    function updateOrdersTable() {
+        ordersTable.innerHTML = '';
+
+        if (orders.length === 0) {
+            ordersTable.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-gray-500">No orders yet. Add some donuts!</td></tr>';
+            return;
+        }
+
+        // Filter orders to only show today's orders for the "Today's Orders" table
+        const today = getCurrentDate();
+        const todaysOrders = orders.filter(order => order.date === today);
+
+        if (todaysOrders.length === 0) {
+            ordersTable.innerHTML = '<tr><td colspan="6" class="text-center py-4 text-gray-500">No orders for today.</td></tr>';
+            return;
+        }
+
+        todaysOrders.forEach((order, index) => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-pink-100 hover:bg-pink-50';
+            row.innerHTML = `
+                <td class="px-4 py-3">${order.flavor}</td>
+                <td class="px-4 py-3">${order.topping}</td>
+                <td class="px-4 py-3">${order.quantity} PC${order.quantity > 1 ? 'S' : ''}</td>
+                <td class="px-4 py-3 font-semibold">₱${order.price}</td>
+                <td class="px-4 py-3">${order.date}</td>
+                <td class="px-4 py-3">
+                    <button onclick="removeOrder(${index})" class="text-red-500 hover:text-red-700">
+                        Remove
+                    </button>
+                </td>
+            `;
+            ordersTable.appendChild(row);
+        });
+    }
+
+    // Modified updateHistoryTable to accept a filterDate
+    function updateHistoryTable(filterDate = null) {
+        historyTable.innerHTML = '';
+        const filteredOrders = filterDate
+            ? orders.filter(order => order.date === filterDate)
+            : orders; // If no filterDate, show all orders
+
+        if (filteredOrders.length === 0) {
+            historyTable.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-gray-500">No orders found for this date.</td></tr>';
+            return;
+        }
+
+        filteredOrders.forEach(order => {
+            const row = document.createElement('tr');
+            row.className = 'border-b border-purple-100 hover:bg-purple-50';
+            row.innerHTML = `
+                <td class="px-4 py-3">${order.flavor}</td>
+                <td class="px-4 py-3">${order.topping}</td>
+                <td class="px-4 py-3">${order.quantity} PC${order.quantity > 1 ? 'S' : ''}</td>
+                <td class="px-4 py-3 font-semibold">₱${order.price}</td>
+                <td class="px-4 py-3">${order.date}</td>
+            `;
+            historyTable.appendChild(row);
+        });
+    }
+
+    // Modified updateFinancialHistoryTable to accept a filterDate and include topping
+    function updateFinancialHistoryTable(filterDate = null) {
+        financialHistoryTable.innerHTML = '';
+        const filteredOrders = filterDate
+            ? orders.filter(order => order.date === filterDate)
+            : orders; // If no filterDate, show all orders
+
+        if (filteredOrders.length === 0) {
+            financialHistoryTable.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-gray-500">No financial data found for this date.</td></tr>';
+            return;
+        }
+
+        filteredOrders.forEach(order => {
+            const ingredientsCost = order.price * 0.6;
+            const salaryCost = order.price * 0.4;
+
+            const row = document.createElement('tr');
+            row.className = 'border-b border-pink-100 hover:bg-pink-50';
+            row.innerHTML = `
+                <td class="px-4 py-3">${order.date}</td>
+                <td class="px-4 py-3">${order.flavor}</td>
+                <td class="px-4 py-3">${order.topping}</td>
+                <td class="px-4 py-3">${order.quantity} PC${order.quantity > 1 ? 'S' : ''}</td>
+                <td class="px-4 py-3 font-semibold">₱${order.price}</td>
+                <td class="px-4 py-3 text-green-600">₱${ingredientsCost.toFixed(2)}</td>
+                <td class="px-4 py-3 text-blue-600">₱${salaryCost.toFixed(2)}</td>
+            `;
+            financialHistoryTable.appendChild(row);
+        });
+    }
+
+    // New function to update the daily financial history table
+    function updateDailyFinancialHistoryTable() {
+        dailyFinancialHistoryTable.innerHTML = '';
+
+        // Group orders by date
+        const dailySummary = orders.reduce((acc, order) => {
+            if (!acc[order.date]) {
+                acc[order.date] = { totalSales: 0, ingredientsCost: 0, salaryCost: 0 };
+            }
+            acc[order.date].totalSales += order.price;
+            acc[order.date].ingredientsCost += (order.price * 0.6);
+            acc[order.date].salaryCost += (order.price * 0.4);
+            return acc;
+        }, {});
+
+        // Sort dates in descending order (most recent first)
+        const sortedDates = Object.keys(dailySummary).sort((a, b) => {
+            // Convert MM/DD/YYYY to YYYYMMDD for proper sorting
+            const dateA = new Date(a).getTime();
+            const dateB = new Date(b).getTime();
+            return dateB - dateA;
+        });
+
+        if (sortedDates.length === 0) {
+            dailyFinancialHistoryTable.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-gray-500">No daily financial data available.</td></tr>';
+            return;
+        }
+
+        sortedDates.forEach(date => {
+            const summary = dailySummary[date];
+            const row = document.createElement('tr');
+            row.className = 'border-b border-purple-100 hover:bg-purple-50';
+            row.innerHTML = `
+                <td class="px-4 py-3">${date}</td>
+                <td class="px-4 py-3 font-semibold">₱${summary.totalSales}</td>
+                <td class="px-4 py-3 text-green-600">₱${summary.ingredientsCost.toFixed(2)}</td>
+                <td class="px-4 py-3 text-blue-600">₱${summary.salaryCost.toFixed(2)}</td>
+            `;
+            dailyFinancialHistoryTable.appendChild(row);
+        });
+    }
+
+
+    window.removeOrder = function(index) {
+        orders.splice(index, 1);
+        updateOrdersTable();
+        
+        // After removing, re-apply the current history filter to both tables
+        const currentHistoryFilterDate = historyDateFilter.value;
+        if (currentHistoryFilterDate) {
+            const [year, month, day] = currentHistoryFilterDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateHistoryTable(formattedDate);
+        } else {
+            updateHistoryTable(); // If no filter, show all
+        }
+
+        const currentFinancialFilterDate = financialHistoryDateFilter.value;
+        if (currentFinancialFilterDate) {
+            const [year, month, day] = currentFinancialFilterDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateFinancialHistoryTable(formattedDate);
+        } else {
+            updateFinancialHistoryTable(); // If no filter, show all
+        }
+        updateDailyFinancialHistoryTable(); // New: Update daily financial history table after removal
+        updateFinancialSummary();
+    }
+
+    function updateFinancialSummary() {
+        // Calculate summary based only on today's orders
+        const today = getCurrentDate();
+        const todaysOrders = orders.filter(order => order.date === today);
+        const totalSales = todaysOrders.reduce((sum, order) => sum + order.price, 0);
+        const ingredientsCost = totalSales * 0.6;
+        const salaryCost = totalSales * 0.4;
+
+        totalSalesEl.textContent = `₱${totalSales}`;
+        ingredientsCostEl.textContent = `₱${ingredientsCost.toFixed(2)}`;
+        salaryCostEl.textContent = `₱${salaryCost.toFixed(2)}`;
+    }
+
+    // Event listener for the general history date filter
+    historyDateFilter.addEventListener('change', (event) => {
+        const selectedDate = event.target.value; // Format: YYYY-MM-DD
+        if (selectedDate) {
+            // Convert YYYY-MM-DD to MM/DD/YYYY to match stored date format
+            const [year, month, day] = selectedDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateHistoryTable(formattedDate);
+        } else {
+            updateHistoryTable(); // If filter is cleared, show all orders
+        }
+    });
+
+    // Event listener for the financial history date filter
+    financialHistoryDateFilter.addEventListener('change', (event) => {
+        const selectedDate = event.target.value; // Format: YYYY-MM-DD
+        if (selectedDate) {
+            // Convert YYYY-MM-DD to MM/DD/YYYY to match stored date format
+            const [year, month, day] = selectedDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateFinancialHistoryTable(formattedDate);
+        } else {
+            updateFinancialHistoryTable(); // If filter is cleared, show all financial history
+        }
+    });
+
+    // 🚀 Load orders on initial page load
+    loadOrdersFromFirebase();
+</script>
+</body>
+</html>
