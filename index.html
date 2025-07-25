@@ -15,8 +15,8 @@
         
         body {
             font-family: 'Nunito', Arial, sans-serif;
-            /* More focused lavender gradient for the body background */
-            background: linear-gradient(160deg, #F0E6FA 0%, #DDA0DD 50%, #B19CD9 100%); 
+            /* Darker pastel lavender gradient for the body background */
+            background: linear-gradient(160deg, #C8A2C8 0%, #9370DB 50%, #6A5ACD 100%); /* Thistle to MediumPurple to SlateBlue */
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
@@ -48,6 +48,11 @@
         .floating-element:nth-child(13) { bottom: 30%; left: 5%; width: 115px; animation-delay: 19s; }
         .floating-element:nth-child(14) { top: 5%; left: 60%; width: 80px; animation-delay: 22s; }
         .floating-element:nth-child(15) { bottom: 25%; right: 30%; width: 105px; animation-delay: 5s; }
+        .floating-element:nth-child(16) { top: 12%; left: 70%; width: 90px; animation-delay: 1s; }
+        .floating-element:nth-child(17) { bottom: 8%; left: 75%; width: 100px; animation-delay: 4s; }
+        .floating-element:nth-child(18) { top: 45%; right: 2%; width: 85px; animation-delay: 10s; }
+        .floating-element:nth-child(19) { top: 20%; right: 40%; width: 110px; animation-delay: 16s; }
+        .floating-element:nth-child(20) { bottom: 40%; left: 25%; width: 70px; animation-delay: 20s; }
 
 
         @keyframes floatAndRotate {
@@ -59,13 +64,13 @@
         }
 
         .donut-bg {
-            /* Removed background-image */
-            background-color: #F0E6FA; /* Soft lavender background for the main container */
+            /* Soft pastel lavender background for the main container */
+            background-color: #E6E6FA; /* Lavender */
             position: relative;
             border-radius: 3rem;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border: 5px solid #DDA0DD; /* Plum border for a fun frame */
+            border: 5px solid #BA55D3; /* MediumOrchid - a vibrant pastel purple */
         }
         .donut-bg::before {
             content: '';
@@ -86,7 +91,7 @@
             transition: all 0.4s cubic-bezier(.25,.8,.25,1.5);
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
             border-radius: 2rem;
-            border: 3px dashed #D8BFD8; /* Thistle dashed border */
+            border: 3px dashed #DDA0DD; /* Plum dashed border */
         }
         
         .donut-card:hover {
@@ -105,7 +110,7 @@
             text-shadow: 2px 2px 3px rgba(0,0,0,0.3);
             box-shadow: 0 8px 15px rgba(0,0,0,0.3);
             transition: all 0.3s cubic-bezier(.17,.67,.83,.67);
-            background: linear-gradient(45deg, #9370DB, #BA55D3); /* MediumPurple to MediumOrchid gradient */
+            background: linear-gradient(45deg, #8A2BE2, #BA55D3); /* BlueViolet to MediumOrchid gradient */
             color: white;
             border: none;
             letter-spacing: 1px;
@@ -113,7 +118,7 @@
         button:hover {
             transform: scale(1.2) rotate(10deg);
             box-shadow: 0 12px 20px rgba(0,0,0,0.4);
-            background: linear-gradient(45deg, #BA55D3, #9370DB); /* Reverse gradient on hover */
+            background: linear-gradient(45deg, #BA55D3, #8A2BE2); /* Reverse gradient on hover */
         }
         
         @keyframes floating {
@@ -124,21 +129,21 @@
 
         /* Custom colors for a lavender-themed palette */
         .text-primary-heading { 
-            color: #6A5ACD; 
+            color: #4B0082; /* Indigo - deep purple */
             font-family: 'Nunito', Arial, sans-serif;
             font-weight: 900;
         } 
-        .text-secondary-text { color: #8A2BE2; } /* BlueViolet - vibrant purple */
-        .bg-form-background { background-color: #E6E6FA; border: 4px solid #DDA0DD; } /* Lavender (Thistle) with Plum border */
+        .text-secondary-text { color: #6A5ACD; } /* SlateBlue - vibrant purple */
+        .bg-form-background { background-color: #DDA0DD; border: 4px solid #BA55D3; } /* Plum with MediumOrchid border */
         .text-accent-pink { color: #FF69B4; } /* HotPink - playful accent */
         .text-accent-orange { color: #FF8C00; } /* DarkOrange - bright accent */
         .bg-card-light-pink { background-color: #FFD1DC; } /* Pink */
         .bg-card-light-purple { background-color: #E0BBE4; } /* Thistle */
         .bg-card-light-yellow { background-color: #FFFACD; } /* LemonChiffon */
-        .border-input { border-color: #D8BFD8; border-width: 3px; } /* Thistle, thicker border */
-        .focus-border-input { border-color: #9370DB; } /* MediumPurple on focus */
+        .border-input { border-color: #BA55D3; border-width: 3px; } /* MediumOrchid, thicker border */
+        .focus-border-input { border-color: #8A2BE2; } /* BlueViolet on focus */
         .bg-table-header { background-color: #4B0082; } /* Indigo - vibrant purple for table header */
-        .border-table-row { border-color: #D8BFD8; border-width: 2px; } /* Thistle, softer border */
+        .border-table-row { border-color: #DDA0DD; border-width: 2px; } /* Plum, softer border */
         .hover-table-row { background-color: #F0E6FA; } /* Lavender (Thistle) light */
         .text-summary-green { color: #6B8E23; } /* OliveDrab - earthy green */
         .text-summary-blue { color: #4682B4; } /* SteelBlue - soft blue */
@@ -147,27 +152,27 @@
 
         /* Overriding Tailwind classes with custom colors */
         .text-purple-800 { 
-            color: var(--text-primary-heading, #6A5ACD); 
+            color: var(--text-primary-heading, #4B0082); 
             font-family: 'Nunito', Arial, sans-serif;
             font-weight: 900;
         }
-        .text-purple-700 { color: var(--text-secondary-text, #8A2BE2); }
-        .bg-purple-100 { background-color: var(--bg-form-background, #E6E6FA); border: 4px solid #DDA0DD; }
+        .text-purple-700 { color: var(--text-secondary-text, #6A5ACD); }
+        .bg-purple-100 { background-color: var(--bg-form-background, #DDA0DD); border: 4px solid #BA55D3; }
         .text-pink-500 { color: var(--text-accent-pink, #FF69B4); }
         .text-pink-700 { color: var(--text-accent-pink, #FF69B4); }
         .bg-pink-50 { background-color: var(--bg-card-light-pink, #FFD1DC); }
         .bg-purple-50 { background-color: var(--bg-card-light-purple, #E0BBE4); }
         .bg-yellow-50 { background-color: var(--bg-card-light-yellow, #FFFACD); }
         .text-orange-700 { color: var(--text-accent-orange, #FF8C00); }
-        .border-purple-300 { border-color: var(--border-input, #D8BFD8); border-width: 3px; }
-        .focus\:border-purple-500:focus { border-color: var(--focus-border-input, #9370DB); }
-        .bg-purple-600 { background: linear-gradient(45deg, #9370DB, #BA55D3); }
-        .hover\:bg-purple-800:hover { background: linear-gradient(45deg, #BA55D3, #9370DB); }
+        .border-purple-300 { border-color: var(--border-input, #BA55D3); border-width: 3px; }
+        .focus\:border-purple-500:focus { border-color: var(--focus-border-input, #8A2BE2); }
+        .bg-purple-600 { background: linear-gradient(45deg, #8A2BE2, #BA55D3); }
+        .hover\:bg-purple-800:hover { background: linear-gradient(45deg, #BA55D3, #8A2BE2); }
         .bg-pink-100 { background-color: var(--bg-table-header, #4B0082); }
-        .border-purple-200 { border-color: var(--border-table-row, #D8BFD8); border-width: 2px; }
+        .border-purple-200 { border-color: var(--border-table-row, #DDA0DD); border-width: 2px; }
         .hover\:bg-purple-100:hover { background-color: var(--hover-table-row, #F0E6FA); }
         .text-purple-500 { 
-            color: var(--text-primary-heading, #6A5ACD); 
+            color: var(--text-primary-heading, #4B0082); 
             font-family: 'Nunito', Arial, sans-serif;
             font-weight: 800;
         }
@@ -176,7 +181,7 @@
         .border-pink-100 { border-color: var(--border-financial-table, #E0BBE4); border-width: 2px; }
         .hover\:bg-pink-50:hover { background-color: var(--hover-financial-table, #F0E6FA); }
         .border-pink-300 { border-color: var(--border-financial-table, #E0BBE4); border-width: 2px; }
-        .focus\:border-pink-500:focus { border-color: var(--focus-border-input, #9370DB); }
+        .focus\:border-pink-500:focus { border-color: var(--focus-border-input, #8A2BE2); }
 
         /* Specific styles for select inputs to match the theme */
         #flavor, #topping, #quantity, #historyDateFilter, #financialHistoryDateFilter, #dailyFinancialHistoryDateFilter, #monthlyFinancialMonthFilter, #monthlyFinancialYearFilter {
@@ -184,18 +189,18 @@
             border-radius: 1rem;
             padding: 0.6rem 0.8rem;
             font-size: 1.1rem;
-            color: #8A2BE2; /* BlueViolet for text */
+            color: #6A5ACD; /* SlateBlue for text */
             background-color: #FFFFFF;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
             appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239370DB%22%20d%3D%22M287%2C197.3L159.3%2C69.6c-3.2-3.2-8.4-3.2-11.6%2C0L5.4%2C197.3c-3.2%2C3.2-3.2%2C8.4%2C0%2C11.6l11.6%2C11.6c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l120.7-120.7l120.7%2C120.7c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l11.6-11.6C290.2%2C205.7%2C290.2%2C200.5%2C287%2C197.3z%22%2F%2F%3E%3C%2Fsvg%3E'); /* Lavender custom arrow */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%238A2BE2%22%20d%3D%22M287%2C197.3L159.3%2C69.6c-3.2-3.2-8.4-3.2-11.6%2C0L5.4%2C197.3c-3.2%2C3.2-3.2%2C8.4%2C0%2C11.6l11.6%2C11.6c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l120.7-120.7l120.7%2C120.7c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l11.6-11.6C290.2%2C205.7%2C290.2%2C200.5%2C287%2C197.3z%22%2F%2F%3E%3C%2Fsvg%3E'); /* BlueViolet custom arrow */
             background-repeat: no-repeat;
             background-position: right 0.8em top 50%;
             background-size: 0.7em auto;
         }
         #flavor:focus, #topping:focus, #quantity:focus, #historyDateFilter:focus, #financialHistoryDateFilter:focus, #dailyFinancialHistoryDateFilter:focus, #monthlyFinancialMonthFilter:focus, #monthlyFinancialYearFilter:focus {
             outline: none;
-            box-shadow: 0 0 0 4px rgba(147, 112, 219, 0.4); /* MediumPurple glow on focus */
+            box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.4); /* BlueViolet glow on focus */
         }
 
         /* Table specific styles for a cuter look */
@@ -248,34 +253,39 @@
 </head>
 <body class="min-h-screen">
     <!-- Floating background elements - now only emojis, more scattered and themed -->
-    <div class="floating-element"><span style="font-size: 3.5em; color: #D8BFD8;">✨</span></div>
-    <div class="floating-element"><span style="font-size: 3em; color: #E0BBE4;">💖</span></div>
-    <div class="floating-element"><span style="font-size: 4em; color: #B19CD9;">🌟</span></div>
-    <div class="floating-element"><span style="font-size: 2.5em; color: #ADD8E6;">🌈</span></div>
-    <div class="floating-element"><span style="font-size: 3.2em; color: #D8BFD8;">✨</span></div>
-    <div class="floating-element"><span style="font-size: 3.8em; color: #E0BBE4;">💖</span></div>
-    <div class="floating-element"><span style="font-size: 3em; color: #B19CD9;">💜</span></div>
-    <div class="floating-element"><span style="font-size: 2.8em; color: #ADD8E6;">💙</span></div>
-    <div class="floating-element"><span style="font-size: 3.5em; color: #DDA0DD;">🌸</span></div>
-    <div class="floating-element"><span style="font-size: 2.5em; color: #E6E6FA;">💫</span></div>
-    <div class="floating-element"><span style="font-size: 3.7em; color: #D8BFD8;">✨</span></div>
-    <div class="floating-element"><span style="font-size: 3.1em; color: #E0BBE4;">💖</span></div>
-    <div class="floating-element"><span style="font-size: 4.2em; color: #B19CD9;">🌟</span></div>
-    <div class="floating-element"><span style="font-size: 2.7em; color: #ADD8E6;">🌈</span></div>
-    <div class="floating-element"><span style="font-size: 3.3em; color: #DDA0DD;">🌸</span></div>
+    <div class="floating-element"><span style="font-size: 3.5em; color: #DDA0DD;">🍩</span></div>
+    <div class="floating-element"><span style="font-size: 3em; color: #BA55D3;">🍦</span></div>
+    <div class="floating-element"><span style="font-size: 4em; color: #9370DB;">🍭</span></div>
+    <div class="floating-element"><span style="font-size: 2.5em; color: #E0BBE4;">🍬</span></div>
+    <div class="floating-element"><span style="font-size: 3.2em; color: #FFD1DC;">🌈</span></div>
+    <div class="floating-element"><span style="font-size: 3.8em; color: #DDA0DD;">✨</span></div>
+    <div class="floating-element"><span style="font-size: 3em; color: #BA55D3;">💖</span></div>
+    <div class="floating-element"><span style="font-size: 2.8em; color: #9370DB;">🌟</span></div>
+    <div class="floating-element"><span style="font-size: 3.5em; color: #E0BBE4;">💜</span></div>
+    <div class="floating-element"><span style="font-size: 2.5em; color: #FFD1DC;">💙</span></div>
+    <div class="floating-element"><span style="font-size: 3.7em; color: #DDA0DD;">🌸</span></div>
+    <div class="floating-element"><span style="font-size: 3.1em; color: #BA55D3;">💫</span></div>
+    <div class="floating-element"><span style="font-size: 4.2em; color: #9370DB;">🍩</span></div>
+    <div class="floating-element"><span style="font-size: 2.7em; color: #E0BBE4;">🍦</span></div>
+    <div class="floating-element"><span style="font-size: 3.3em; color: #FFD1DC;">🍭</span></div>
+    <div class="floating-element"><span style="font-size: 3.0em; color: #DDA0DD;">🍬</span></div>
+    <div class="floating-element"><span style="font-size: 3.6em; color: #BA55D3;">🌈</span></div>
+    <div class="floating-element"><span style="font-size: 2.9em; color: #9370DB;">✨</span></div>
+    <div class="floating-element"><span style="font-size: 4.1em; color: #E0BBE4;">💖</span></div>
+    <div class="floating-element"><span style="font-size: 3.4em; color: #FFD1DC;">🌟</span></div>
 
 
     <div class="donut-bg py-6 px-3 sm:py-10 sm:px-4 relative z-10 max-w-4xl mx-auto">
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-10">
-                <h1 class="text-3xl md:text-5xl font-bold text-primary-heading mb-2">🍩 Mini Donut Business 🍩</h1>
-                <p class="text-base md:text-xl text-secondary-text tracking-wide">🌈 Track your magical donut sales! 🌈</p>
+                <h1 class="text-3xl md:text-5xl font-bold text-primary-heading mb-2">🍩 Donut World Tracker 🍩</h1>
+                <p class="text-base md:text-xl text-secondary-text tracking-wide">🌈 Track your sweet adventures! 🌈</p>
             </div>
             
             <!-- Order Form -->
             <div class="bg-form-background rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">✨ Add New Order ✨</h2>
+                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">✨ Add New Sweet Treat ✨</h2>
                 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                     <!-- Flavor Selection -->
@@ -334,7 +344,7 @@
             
             <!-- Orders Table -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">💖 Today's Orders 💖</h2>
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">💖 Today's Sweet Treats 💖</h2>
                 <div class="overflow-x-auto text-sm md:text-base">
                     <table class="w-full table-auto">
                         <thead>
@@ -358,7 +368,7 @@
             <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-2">
                 <!-- Daily Summary -->
                 <div class="bg-white rounded-3xl p-6 shadow-xl">
-                    <h2 class="text-3xl font-bold text-accent-pink mb-4 text-center">🌟 Daily Summary 🌟</h2>
+                    <h2 class="text-3xl font-bold text-accent-pink mb-4 text-center">🌟 Daily Sweet Summary 🌟</h2>
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
                             <span class="text-lg font-semibold text-secondary-text">Total Sales:</span>
@@ -386,7 +396,7 @@
 
             <!-- History Table -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">📜 Order History 📜</h2>
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">📜 Sweet Treat History 📜</h2>
                 <div class="mb-4 flex items-center justify-center">
                     <label for="historyDateFilter" class="block text-secondary-text font-bold mr-2">Filter by Date:</label>
                     <input type="date" id="historyDateFilter" class="p-2 rounded-lg border-2 border-input focus:border-purple-500 focus:outline-none">
@@ -411,7 +421,7 @@
 
             <!-- Financial History Table (Per Order) -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">💰 Financial History (Per Order) 💰</h2>
+                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">💰 Financial History (Per Treat) 💰</h2>
                 <div class="mb-4 flex items-center justify-center">
                     <label for="financialHistoryDateFilter" class="block text-accent-pink font-bold mr-2">Filter by Date:</label>
                     <input type="date" id="financialHistoryDateFilter" class="p-2 rounded-lg border-2 border-financial-table focus:border-pink-500 focus:outline-none">
