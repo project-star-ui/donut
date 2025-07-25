@@ -4,73 +4,284 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mini Donut Tracker</title>
-    <meta name="theme-color" content="#6a3093">
+    <meta name="theme-color" content="#9370DB"> <!-- MediumPurple - a core lavender shade -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="/donut/manifest.json">
     <link rel="apple-touch-icon" href="/donut/icons/icon-192x192.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400;700&family=Comic+Neue:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap');
         
         body {
-            font-family: 'Fredoka One', 'Comic Neue', arial;
-            background-color: #E6E6FA;
+            font-family: 'Nunito', Arial, sans-serif;
+            /* More focused lavender gradient for the body background */
+            background: linear-gradient(160deg, #F0E6FA 0%, #DDA0DD 50%, #B19CD9 100%); 
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+            cursor: auto;
         }
-        
+
+        /* Floating background elements - more scattered and prominent */
+        .floating-element {
+            position: absolute;
+            opacity: 0.8; /* Slightly more opaque */
+            animation: floatAndRotate 25s infinite ease-in-out; /* Slower, more graceful animation */
+            z-index: 0;
+        }
+
+        /* Adjusted positions and sizes for more scattering */
+        .floating-element:nth-child(1) { top: 5%; left: 5%; width: 100px; animation-delay: 0s; }
+        .floating-element:nth-child(2) { top: 15%; right: 10%; width: 80px; animation-delay: 3s; }
+        .floating-element:nth-child(3) { bottom: 10%; left: 15%; width: 120px; animation-delay: 6s; }
+        .floating-element:nth-child(4) { top: 30%; left: 2%; width: 90px; animation-delay: 9s; }
+        .floating-element:nth-child(5) { bottom: 5%; right: 5%; width: 110px; animation-delay: 12s; }
+        .floating-element:nth-child(6) { top: 25%; left: 40%; width: 70px; animation-delay: 15s; }
+        .floating-element:nth-child(7) { bottom: 20%; right: 18%; width: 95px; animation-delay: 18s; }
+        .floating-element:nth-child(8) { top: 50%; left: 30%; width: 85px; animation-delay: 21s; }
+        .floating-element:nth-child(9) { top: 10%; right: 25%; width: 105px; animation-delay: 24s; }
+        .floating-element:nth-child(10) { bottom: 15%; left: 45%; width: 75px; animation-delay: 2s; }
+        .floating-element:nth-child(11) { top: 60%; right: 8%; width: 100px; animation-delay: 7s; }
+        .floating-element:nth-child(12) { top: 40%; left: 10%; width: 90px; animation-delay: 13s; }
+        .floating-element:nth-child(13) { bottom: 30%; left: 5%; width: 115px; animation-delay: 19s; }
+        .floating-element:nth-child(14) { top: 5%; left: 60%; width: 80px; animation-delay: 22s; }
+        .floating-element:nth-child(15) { bottom: 25%; right: 30%; width: 105px; animation-delay: 5s; }
+
+
+        @keyframes floatAndRotate {
+            0% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0.8; }
+            25% { transform: translateY(-30px) rotate(15deg) scale(1.05); opacity: 0.9; }
+            50% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0.8; }
+            75% { transform: translateY(30px) rotate(-15deg) scale(1.05); opacity: 0.9; }
+            100% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0.8; }
+        }
+
         .donut-bg {
-            background-image: url('https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8a24f64e-b30c-4517-b377-bef33d65d16d.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            /* Removed background-image */
+            background-color: #F0E6FA; /* Soft lavender background for the main container */
+            position: relative;
+            border-radius: 3rem;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border: 5px solid #DDA0DD; /* Plum border for a fun frame */
         }
-        
+        .donut-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.3); /* Lighter, more transparent overlay */
+            z-index: 0;
+        }
+        .donut-bg > div {
+            position: relative;
+            z-index: 1;
+        }
+
         .donut-card {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(.25,.8,.25,1.5);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            border-radius: 2rem;
+            border: 3px dashed #D8BFD8; /* Thistle dashed border */
         }
         
         .donut-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-15px) rotate(-5deg) scale(1.03);
+            box-shadow: 0 25px 40px rgba(0,0,0,0.25);
         }
         
         .floating {
             animation: floating 3s ease-in-out infinite;
         }
-        body {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23b19cd9" d="M12 2L2 7v10l10 5 10-5V7L12 2z"/></svg>'), auto;
+        button {
+            border-radius: 9999px;
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 3px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s cubic-bezier(.17,.67,.83,.67);
+            background: linear-gradient(45deg, #9370DB, #BA55D3); /* MediumPurple to MediumOrchid gradient */
+            color: white;
+            border: none;
+            letter-spacing: 1px;
         }
         button:hover {
-            transform: scale(1.1) rotate(5deg);
-            transition: all 0.3s ease;
+            transform: scale(1.2) rotate(10deg);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+            background: linear-gradient(45deg, #BA55D3, #9370DB); /* Reverse gradient on hover */
         }
         
         @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(8deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Custom colors for a lavender-themed palette */
+        .text-primary-heading { 
+            color: #6A5ACD; 
+            font-family: 'Nunito', Arial, sans-serif;
+            font-weight: 900;
+        } 
+        .text-secondary-text { color: #8A2BE2; } /* BlueViolet - vibrant purple */
+        .bg-form-background { background-color: #E6E6FA; border: 4px solid #DDA0DD; } /* Lavender (Thistle) with Plum border */
+        .text-accent-pink { color: #FF69B4; } /* HotPink - playful accent */
+        .text-accent-orange { color: #FF8C00; } /* DarkOrange - bright accent */
+        .bg-card-light-pink { background-color: #FFD1DC; } /* Pink */
+        .bg-card-light-purple { background-color: #E0BBE4; } /* Thistle */
+        .bg-card-light-yellow { background-color: #FFFACD; } /* LemonChiffon */
+        .border-input { border-color: #D8BFD8; border-width: 3px; } /* Thistle, thicker border */
+        .focus-border-input { border-color: #9370DB; } /* MediumPurple on focus */
+        .bg-table-header { background-color: #4B0082; } /* Indigo - vibrant purple for table header */
+        .border-table-row { border-color: #D8BFD8; border-width: 2px; } /* Thistle, softer border */
+        .hover-table-row { background-color: #F0E6FA; } /* Lavender (Thistle) light */
+        .text-summary-green { color: #6B8E23; } /* OliveDrab - earthy green */
+        .text-summary-blue { color: #4682B4; } /* SteelBlue - soft blue */
+        .border-financial-table { border-color: #E0BBE4; border-width: 2px; } /* Thistle light */
+        .hover-financial-table { background-color: #F0E6FA; } /* Lavender (Thistle) light */
+
+        /* Overriding Tailwind classes with custom colors */
+        .text-purple-800 { 
+            color: var(--text-primary-heading, #6A5ACD); 
+            font-family: 'Nunito', Arial, sans-serif;
+            font-weight: 900;
+        }
+        .text-purple-700 { color: var(--text-secondary-text, #8A2BE2); }
+        .bg-purple-100 { background-color: var(--bg-form-background, #E6E6FA); border: 4px solid #DDA0DD; }
+        .text-pink-500 { color: var(--text-accent-pink, #FF69B4); }
+        .text-pink-700 { color: var(--text-accent-pink, #FF69B4); }
+        .bg-pink-50 { background-color: var(--bg-card-light-pink, #FFD1DC); }
+        .bg-purple-50 { background-color: var(--bg-card-light-purple, #E0BBE4); }
+        .bg-yellow-50 { background-color: var(--bg-card-light-yellow, #FFFACD); }
+        .text-orange-700 { color: var(--text-accent-orange, #FF8C00); }
+        .border-purple-300 { border-color: var(--border-input, #D8BFD8); border-width: 3px; }
+        .focus\:border-purple-500:focus { border-color: var(--focus-border-input, #9370DB); }
+        .bg-purple-600 { background: linear-gradient(45deg, #9370DB, #BA55D3); }
+        .hover\:bg-purple-800:hover { background: linear-gradient(45deg, #BA55D3, #9370DB); }
+        .bg-pink-100 { background-color: var(--bg-table-header, #4B0082); }
+        .border-purple-200 { border-color: var(--border-table-row, #D8BFD8); border-width: 2px; }
+        .hover\:bg-purple-100:hover { background-color: var(--hover-table-row, #F0E6FA); }
+        .text-purple-500 { 
+            color: var(--text-primary-heading, #6A5ACD); 
+            font-family: 'Nunito', Arial, sans-serif;
+            font-weight: 800;
+        }
+        .text-green-600 { color: var(--text-summary-green, #6B8E23); }
+        .text-blue-600 { color: var(--text-summary-blue, #4682B4); }
+        .border-pink-100 { border-color: var(--border-financial-table, #E0BBE4); border-width: 2px; }
+        .hover\:bg-pink-50:hover { background-color: var(--hover-financial-table, #F0E6FA); }
+        .border-pink-300 { border-color: var(--border-financial-table, #E0BBE4); border-width: 2px; }
+        .focus\:border-pink-500:focus { border-color: var(--focus-border-input, #9370DB); }
+
+        /* Specific styles for select inputs to match the theme */
+        #flavor, #topping, #quantity, #historyDateFilter, #financialHistoryDateFilter, #dailyFinancialHistoryDateFilter, #monthlyFinancialMonthFilter, #monthlyFinancialYearFilter {
+            border-width: 3px;
+            border-radius: 1rem;
+            padding: 0.6rem 0.8rem;
+            font-size: 1.1rem;
+            color: #8A2BE2; /* BlueViolet for text */
+            background-color: #FFFFFF;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%239370DB%22%20d%3D%22M287%2C197.3L159.3%2C69.6c-3.2-3.2-8.4-3.2-11.6%2C0L5.4%2C197.3c-3.2%2C3.2-3.2%2C8.4%2C0%2C11.6l11.6%2C11.6c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l120.7-120.7l120.7%2C120.7c3.2%2C3.2%2C8.4%2C3.2%2C11.6%2C0l11.6-11.6C290.2%2C205.7%2C290.2%2C200.5%2C287%2C197.3z%22%2F%2F%3E%3C%2Fsvg%3E'); /* Lavender custom arrow */
+            background-repeat: no-repeat;
+            background-position: right 0.8em top 50%;
+            background-size: 0.7em auto;
+        }
+        #flavor:focus, #topping:focus, #quantity:focus, #historyDateFilter:focus, #financialHistoryDateFilter:focus, #dailyFinancialHistoryDateFilter:focus, #monthlyFinancialMonthFilter:focus, #monthlyFinancialYearFilter:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(147, 112, 219, 0.4); /* MediumPurple glow on focus */
+        }
+
+        /* Table specific styles for a cuter look */
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        thead th {
+            font-family: 'Nunito', Arial, sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: #FFF;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        tbody tr:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        tbody tr:nth-child(odd) {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        tbody tr:hover {
+            background-color: #F0E6FA; /* Lavender (Thistle) light on hover */
+            transform: scale(1.01);
+            transition: all 0.2s ease-in-out;
+        }
+        .remove-button {
+            background: none;
+            border: none;
+            color: #DC143C; /* Crimson for remove button */
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .remove-button:hover {
+            transform: scale(1.2);
+            color: #8B0000; /* DarkRed on hover */
+            background-color: rgba(255, 255, 255, 0.5);
         }
     </style>
 </head>
 <body class="min-h-screen">
-    <div class="donut-bg py-6 px-3 sm:py-10 sm:px-4">
+    <!-- Floating background elements - now only emojis, more scattered and themed -->
+    <div class="floating-element"><span style="font-size: 3.5em; color: #D8BFD8;">✨</span></div>
+    <div class="floating-element"><span style="font-size: 3em; color: #E0BBE4;">💖</span></div>
+    <div class="floating-element"><span style="font-size: 4em; color: #B19CD9;">🌟</span></div>
+    <div class="floating-element"><span style="font-size: 2.5em; color: #ADD8E6;">🌈</span></div>
+    <div class="floating-element"><span style="font-size: 3.2em; color: #D8BFD8;">✨</span></div>
+    <div class="floating-element"><span style="font-size: 3.8em; color: #E0BBE4;">💖</span></div>
+    <div class="floating-element"><span style="font-size: 3em; color: #B19CD9;">💜</span></div>
+    <div class="floating-element"><span style="font-size: 2.8em; color: #ADD8E6;">💙</span></div>
+    <div class="floating-element"><span style="font-size: 3.5em; color: #DDA0DD;">🌸</span></div>
+    <div class="floating-element"><span style="font-size: 2.5em; color: #E6E6FA;">💫</span></div>
+    <div class="floating-element"><span style="font-size: 3.7em; color: #D8BFD8;">✨</span></div>
+    <div class="floating-element"><span style="font-size: 3.1em; color: #E0BBE4;">💖</span></div>
+    <div class="floating-element"><span style="font-size: 4.2em; color: #B19CD9;">🌟</span></div>
+    <div class="floating-element"><span style="font-size: 2.7em; color: #ADD8E6;">🌈</span></div>
+    <div class="floating-element"><span style="font-size: 3.3em; color: #DDA0DD;">🌸</span></div>
+
+
+    <div class="donut-bg py-6 px-3 sm:py-10 sm:px-4 relative z-10 max-w-4xl mx-auto">
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-10">
-                <h1 class="text-3xl md:text-5xl font-bold text-purple-800 mb-2" style="color: #6a3093;">🍩 Mini Donut Factory 🍩</h1>
-                <p class="text-base md:text-xl text-purple-700 tracking-wide">🌈 Track your magical donut sales! 🌈</p>
+                <h1 class="text-3xl md:text-5xl font-bold text-primary-heading mb-2">🍩 Mini Donut Business 🍩</h1>
+                <p class="text-base md:text-xl text-secondary-text tracking-wide">🌈 Track your magical donut sales! 🌈</p>
             </div>
             
             <!-- Order Form -->
-            <div class="bg-purple-100 rounded-3xl p-6 shadow-xl mb-10" style="background-color: #b19cd9;">
-                <h2 class="text-3xl font-bold text-pink-500 mb-6 text-center">Add New Order</h2>
+            <div class="bg-form-background rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">✨ Add New Order ✨</h2>
                 
                 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
                     <!-- Flavor Selection -->
-                    <div class="donut-card bg-pink-50 p-4 rounded-2xl relative">
-                        <label class="block text-purple-700 font-bold mb-2">Flavor</label>
-                        <select id="flavor" class="w-full p-1 md:p-2 rounded-lg border-2 md:border-4 border-purple-300 focus:border-purple-500 focus:outline-none font-bold" style="background-color: #e9d8fd;">
+                    <div class="donut-card bg-card-light-pink p-4 relative">
+                        <label class="block text-secondary-text font-bold mb-2">Flavor</label>
+                        <select id="flavor" class="w-full p-1 md:p-2 rounded-lg border-2 md:border-4 border-input focus:border-purple-500 focus:outline-none font-bold">
                             <option value="">Select Flavor</option>
                             <option value="Chocolate">Chocolate</option>
                             <option value="White Chocolate">White Chocolate</option>
@@ -81,9 +292,9 @@
                     </div>
                     
                     <!-- Topping Selection -->
-                    <div class="donut-card bg-purple-50 p-4 rounded-2xl relative">
-                        <label class="block text-pink-700 font-bold mb-2">Topping</label>
-                        <select id="topping" class="w-full p-2 rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none">
+                    <div class="donut-card bg-card-light-purple p-4 relative">
+                        <label class="block text-accent-pink font-bold mb-2">Topping</label>
+                        <select id="topping" class="w-full p-2 rounded-lg border-2 border-input focus:border-purple-500 focus:outline-none">
                             <option value="">Select Topping</option>
                             <option value="Sprinkles">Sprinkles</option>
                             <option value="Mallows">Mallows</option>
@@ -94,40 +305,40 @@
                     </div>
                     
                     <!-- Quantity Selection -->
-                    <div class="donut-card bg-yellow-50 p-4 rounded-2xl relative">
-                        <label class="block text-orange-700 font-bold mb-2">Quantity</label>
-                        <select id="quantity" class="w-full p-2 rounded-lg border-2 border-yellow-300 focus:border-yellow-500 focus:outline-none">
+                    <div class="donut-card bg-card-light-yellow p-4 relative">
+                        <label class="block text-accent-orange font-bold mb-2">Quantity</label>
+                        <select id="quantity" class="w-full p-2 rounded-lg border-2 border-input focus:border-yellow-500 focus:outline-none">
                             <option value="">Select Quantity</option>
-                            <option value="1">1 PC (₱9)</option>
-                            <option value="2">2 PCS (₱18)</option>
+                            <option value="1">1 PC (₱7)</option>
+                            <option value="2">2 PCS (₱14)</option>
                             <option value="3">3 PCS (₱20)</option>
-                            <option value="4">4 PCS (₱36)</option>
-                            <option value="5">5 PCS (₱45)</option>
+                            <option value="4">4 PCS (₱28)</option>
+                            <option value="5">5 PCS (₱35)</option>
                             <option value="6">6 PCS (₱40)</option>
-                            <option value="7">7 PCS (₱63)</option>
-                            <option value="8">8 PCS (₱72)</option>
-                            <option value="9">9 PCS (₱81)</option>
-                            <option value="10">10 PCS (₱90)</option>
-                            <option value="11">11 PCS (₱99)</option>
-                            <option value="12">12 PCS (₱108)</option>
+                            <option value="7">7 PCS (₱49)</option>
+                            <option value="8">8 PCS (₱56)</option>
+                            <option value="9">9 PCS (₱63)</option>
+                            <option value="10">10 PCS (₱70)</option>
+                            <option value="11">11 PCS (₱77)</option>
+                            <option value="12">12 PCS (₱84)</option>
                         </select>
                     </div>
                 </div>
                 
                 <div class="mt-6 text-center">
-                    <button id="addOrder" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-full text-base md:text-xl transition duration-300 transform hover:scale-105 md:hover:scale-110 hover:shadow-lg" style="background-color: #9370db;">
-                        Add to Orders
+                    <button id="addOrder" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-full text-base md:text-xl transition duration-300 transform hover:scale-105 md:hover:scale-110 hover:shadow-lg">
+                        Add to Orders 🎉
                     </button>
                 </div>
             </div>
             
             <!-- Orders Table -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">Today's Orders</h2>
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">💖 Today's Orders 💖</h2>
                 <div class="overflow-x-auto text-sm md:text-base">
                     <table class="w-full table-auto">
                         <thead>
-                            <tr class="bg-pink-100">
+                            <tr class="bg-table-header">
                                 <th class="px-4 py-2 text-left">Flavor</th>
                                 <th class="px-4 py-2 text-left">Topping</th>
                                 <th class="px-4 py-2 text-left">Quantity</th>
@@ -147,26 +358,26 @@
             <div class="grid grid-cols-1 gap-6 mb-10 lg:grid-cols-2">
                 <!-- Daily Summary -->
                 <div class="bg-white rounded-3xl p-6 shadow-xl">
-                    <h2 class="text-3xl font-bold text-pink-500 mb-4 text-center">Daily Summary</h2>
+                    <h2 class="text-3xl font-bold text-accent-pink mb-4 text-center">🌟 Daily Summary 🌟</h2>
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-lg font-semibold text-purple-700">Total Sales:</span>
-                            <span id="totalSales" class="text-xl font-bold text-pink-600">0 ₱</span>
+                            <span class="text-lg font-semibold text-secondary-text">Total Sales:</span>
+                            <span id="totalSales" class="text-xl font-bold text-accent-pink">0 ₱</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-lg font-semibold text-purple-700">Ingredients (60%):</span>
-                            <span id="ingredientsCost" class="text-xl font-bold text-green-600">0 ₱</span>
+                            <span class="text-lg font-semibold text-secondary-text">Ingredients (60%):</span>
+                            <span id="ingredientsCost" class="text-xl font-bold text-summary-green">0 ₱</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-lg font-semibold text-purple-700">Salary (40%):</span>
-                            <span id="salaryCost" class="text-xl font-bold text-blue-600">0 ₱</span>
+                            <span class="text-lg font-semibold text-secondary-text">Salary (40%):</span>
+                            <span id="salaryCost" class="text-xl font-bold text-summary-blue">0 ₱</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Donut Visualization -->
                 <div class="bg-white rounded-3xl p-6 shadow-xl flex flex-col items-center justify-center">
-                    <h2 class="text-3xl font-bold text-purple-500 mb-4 text-center">Today's Donuts</h2>
+                    <h2 class="text-3xl font-bold text-purple-500 mb-4 text-center">🍩 Today's Donuts 🍩</h2>
                     <div class="relative w-48 h-48">
                         <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/076bb821-f656-41d6-beb1-23ce63ac5abd.png" alt="Colorful assortment of mini donuts with various toppings arranged in a circle" class="w-full h-full object-contain floating" />
                     </div>
@@ -175,15 +386,15 @@
 
             <!-- History Table -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">Order History</h2>
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">📜 Order History 📜</h2>
                 <div class="mb-4 flex items-center justify-center">
-                    <label for="historyDateFilter" class="block text-purple-700 font-bold mr-2">Filter by Date:</label>
-                    <input type="date" id="historyDateFilter" class="p-2 rounded-lg border-2 border-purple-300 focus:border-purple-500 focus:outline-none">
+                    <label for="historyDateFilter" class="block text-secondary-text font-bold mr-2">Filter by Date:</label>
+                    <input type="date" id="historyDateFilter" class="p-2 rounded-lg border-2 border-input focus:border-purple-500 focus:outline-none">
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full table-auto">
                         <thead>
-                            <tr class="bg-purple-100">
+                            <tr class="bg-table-header">
                                 <th class="px-4 py-2 text-left">Flavor</th>
                                 <th class="px-4 py-2 text-left">Topping</th>
                                 <th class="px-4 py-2 text-left">Quantity</th>
@@ -200,15 +411,15 @@
 
             <!-- Financial History Table (Per Order) -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-pink-500 mb-6 text-center">Financial History (Per Order)</h2>
+                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">💰 Financial History (Per Order) 💰</h2>
                 <div class="mb-4 flex items-center justify-center">
-                    <label for="financialHistoryDateFilter" class="block text-pink-700 font-bold mr-2">Filter by Date:</label>
-                    <input type="date" id="financialHistoryDateFilter" class="p-2 rounded-lg border-2 border-pink-300 focus:border-pink-500 focus:outline-none">
+                    <label for="financialHistoryDateFilter" class="block text-accent-pink font-bold mr-2">Filter by Date:</label>
+                    <input type="date" id="financialHistoryDateFilter" class="p-2 rounded-lg border-2 border-financial-table focus:border-pink-500 focus:outline-none">
                 </div>
                 <div class="overflow-x-auto">
                     <table class="w-full table-auto">
                         <thead>
-                            <tr class="bg-pink-100">
+                            <tr class="bg-table-header">
                                 <th class="px-4 py-2 text-left">Date</th>
                                 <th class="px-4 py-2 text-left">Flavor</th>
                                 <th class="px-4 py-2 text-left">Topping</th>
@@ -227,12 +438,17 @@
 
             <!-- Daily Financial History Table (Grand Total) -->
             <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
-                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">Daily Financial History (Grand Total)</h2>
+                <h2 class="text-3xl font-bold text-purple-500 mb-6 text-center">📊 Daily Financial History (Grand Total) 📊</h2>
+                <div class="mb-4 flex items-center justify-center">
+                    <label for="dailyFinancialHistoryDateFilter" class="block text-secondary-text font-bold mr-2">Filter by Date:</label>
+                    <input type="date" id="dailyFinancialHistoryDateFilter" class="p-2 rounded-lg border-2 border-input focus:border-purple-500 focus:outline-none">
+                </div>
                 <div class="overflow-x-auto">
                     <table class="w-full table-auto">
                         <thead>
-                            <tr class="bg-purple-100">
+                            <tr class="bg-table-header">
                                 <th class="px-4 py-2 text-left">Date</th>
+                                <th class="px-4 py-2 text-left">Total Quantity</th>
                                 <th class="px-4 py-2 text-left">Total Sales</th>
                                 <th class="px-4 py-2 text-left">Ingredients (60%)</th>
                                 <th class="px-4 py-2 text-left">Salary (40%)</th>
@@ -240,6 +456,77 @@
                         </thead>
                         <tbody id="dailyFinancialHistoryTable">
                             <!-- Daily financial history will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Monthly Financial History Table (Grand Total) - NEW SECTION -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">🗓️ Monthly Financial History 🗓️</h2>
+                <div class="mb-4 flex items-center justify-center space-x-4">
+                    <div>
+                        <label for="monthlyFinancialMonthFilter" class="block text-accent-pink font-bold mr-2">Filter by Month:</label>
+                        <select id="monthlyFinancialMonthFilter" class="p-2 rounded-lg border-2 border-financial-table focus:border-pink-500 focus:outline-none">
+                            <option value="">All Months</option>
+                            <option value="01">January</option>
+                            <option value="02">February</option>
+                            <option value="03">March</option>
+                            <option value="04">April</option>
+                            <option value="05">May</option>
+                            <option value="06">June</option>
+                            <option value="07">July</option>
+                            <option value="08">August</option>
+                            <option value="09">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="monthlyFinancialYearFilter" class="block text-accent-pink font-bold mr-2">Filter by Year:</label>
+                        <select id="monthlyFinancialYearFilter" class="p-2 rounded-lg border-2 border-financial-table focus:border-pink-500 focus:outline-none">
+                            <option value="">All Years</option>
+                            <!-- Years will be populated dynamically by JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-table-header">
+                                <th class="px-4 py-2 text-left">Month/Year</th>
+                                <th class="px-4 py-2 text-left">Total Sales</th>
+                                <th class="px-4 py-2 text-left">Ingredients (60%)</th>
+                                <th class="px-4 py-2 text-left">Salary (40%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyFinancialHistoryTable">
+                            <!-- Monthly financial history will be added here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Overall Financial Summary (Grand Total) -->
+            <div class="bg-white rounded-3xl p-6 shadow-xl mb-10">
+                <h2 class="text-3xl font-bold text-accent-pink mb-6 text-center">📈 Overall Financial Summary 📈</h2>
+                <div class="overflow-x-auto">
+                    <table class="w-full table-auto">
+                        <thead>
+                            <tr class="bg-table-header">
+                                <th class="px-4 py-2 text-left">Total Sales (All Time)</th>
+                                <th class="px-4 py-2 text-left">Total Ingredients (60%)</th>
+                                <th class="px-4 py-2 text-left">Total Salary (40%)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overallFinancialSummaryTable">
+                            <!-- Overall financial summary will be added here dynamically -->
+                            <tr>
+                                <td class="px-4 py-3 font-semibold" id="overallTotalSales">0 ₱</td>
+                                <td class="px-4 py-3 text-summary-green" id="overallIngredientsCost">0 ₱</td>
+                                <td class="px-4 py-3 text-summary-blue" id="overallSalaryCost">0 ₱</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -268,14 +555,14 @@
 
     let orders = [];
 
-    // Updated priceMap to handle 8 pesos per piece, with special prices for 3 and 6
+    // Updated priceMap to handle 7 pesos per piece, with special prices for 3 and 6
     const priceMap = {
         '1': 7,
         '2': 14,
-        '3': 20, // Changed to ₱20
+        '3': 20, // Remains ₱20
         '4': 28,
         '5': 35,
-        '6': 40, // Changed to ₱40
+        '6': 40, // Remains ₱40
         '7': 49,
         '8': 56,
         '9': 63,
@@ -297,7 +584,14 @@
     const historyDateFilter = document.getElementById('historyDateFilter');
     const financialHistoryTable = document.getElementById('financialHistoryTable');
     const financialHistoryDateFilter = document.getElementById('financialHistoryDateFilter');
-    const dailyFinancialHistoryTable = document.getElementById('dailyFinancialHistoryTable'); // New: Get reference to daily financial history table
+    const dailyFinancialHistoryTable = document.getElementById('dailyFinancialHistoryTable');
+    const dailyFinancialHistoryDateFilter = document.getElementById('dailyFinancialHistoryDateFilter');
+    const monthlyFinancialHistoryTable = document.getElementById('monthlyFinancialHistoryTable'); // NEW
+    const monthlyFinancialMonthFilter = document.getElementById('monthlyFinancialMonthFilter'); // NEW
+    const monthlyFinancialYearFilter = document.getElementById('monthlyFinancialYearFilter'); // NEW
+    const overallTotalSalesEl = document.getElementById('overallTotalSales'); 
+    const overallIngredientsCostEl = document.getElementById('overallIngredientsCost'); 
+    const overallSalaryCostEl = document.getElementById('overallSalaryCost'); 
 
     function getCurrentDate() {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -308,14 +602,14 @@
         const flavor = flavorSelect.value;
         const topping = toppingSelect.value;
         const quantity = quantitySelect.value;
-        const date = getCurrentDate();
+        const date = getCurrentDate(); // MM/DD/YYYY
 
         if (!flavor || !topping || !quantity) {
             alert('Please select all options!');
             return;
         }
 
-        const price = priceMap[quantity]; // Price is now directly from the updated priceMap
+        const price = priceMap[quantity]; 
         const order = { flavor, topping, quantity, price, date };
 
         orders.push(order);
@@ -342,7 +636,20 @@
         } else {
             updateFinancialHistoryTable();
         }
-        updateDailyFinancialHistoryTable(); // New: Update daily financial history table
+        // Update daily financial history table with current filter or all orders
+        const currentDailyFinancialFilterDate = dailyFinancialHistoryDateFilter.value;
+        if (currentDailyFinancialFilterDate) {
+            const [year, month, day] = currentDailyFinancialFilterDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateDailyFinancialHistoryTable(formattedDate);
+        } else {
+            updateDailyFinancialHistoryTable();
+        }
+
+        // NEW: Update monthly financial history table
+        updateMonthlyFinancialHistoryTable(monthlyFinancialMonthFilter.value, monthlyFinancialYearFilter.value);
+        
+        updateOverallFinancialSummary(); 
 
         flavorSelect.value = '';
         toppingSelect.value = '';
@@ -360,9 +667,12 @@
             if (snapshot.exists()) {
                 orders = Object.values(snapshot.val());
                 updateOrdersTable();
-                updateHistoryTable(); // Initial load of history table (no filter)
-                updateFinancialHistoryTable(); // Initial load of financial history table (no filter)
-                updateDailyFinancialHistoryTable(); // New: Initial load of daily financial history table
+                updateHistoryTable(); 
+                updateFinancialHistoryTable(); 
+                updateDailyFinancialHistoryTable(); 
+                populateYearFilter(); // NEW: Populate years on load
+                updateMonthlyFinancialHistoryTable(); // NEW: Initial load of monthly table
+                updateOverallFinancialSummary(); 
                 updateFinancialSummary();
             } else {
                 console.log("No orders found.");
@@ -391,7 +701,7 @@
 
         todaysOrders.forEach((order, index) => {
             const row = document.createElement('tr');
-            row.className = 'border-b-4 border-purple-200 hover:bg-purple-100 transition-all duration-200';
+            row.className = 'border-b-4 border-table-row hover:bg-hover-table-row transition-all duration-200';
             row.innerHTML = `
                 <td class="px-4 py-3">${order.flavor}</td>
                 <td class="px-4 py-3">${order.topping}</td>
@@ -399,8 +709,8 @@
                 <td class="px-4 py-3 font-semibold">₱${order.price}</td>
                 <td class="px-4 py-3">${order.date}</td>
                 <td class="px-4 py-3">
-                    <button onclick="removeOrder(${index})" class="text-red-500 hover:text-red-700">
-                        Remove
+                    <button onclick="removeOrder(${index})" class="remove-button">
+                        Remove 🗑️
                     </button>
                 </td>
             `;
@@ -408,12 +718,11 @@
         });
     }
 
-    // Modified updateHistoryTable to accept a filterDate
     function updateHistoryTable(filterDate = null) {
         historyTable.innerHTML = '';
         const filteredOrders = filterDate
             ? orders.filter(order => order.date === filterDate)
-            : orders; // If no filterDate, show all orders
+            : orders; 
 
         if (filteredOrders.length === 0) {
             historyTable.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-gray-500">No orders found for this date.</td></tr>';
@@ -422,7 +731,7 @@
 
         filteredOrders.forEach(order => {
             const row = document.createElement('tr');
-            row.className = 'border-b border-purple-100 hover:bg-purple-50';
+            row.className = 'border-b border-table-row hover:bg-hover-table-row';
             row.innerHTML = `
                 <td class="px-4 py-3">${order.flavor}</td>
                 <td class="px-4 py-3">${order.topping}</td>
@@ -434,12 +743,11 @@
         });
     }
 
-    // Modified updateFinancialHistoryTable to accept a filterDate and include topping
     function updateFinancialHistoryTable(filterDate = null) {
         financialHistoryTable.innerHTML = '';
         const filteredOrders = filterDate
             ? orders.filter(order => order.date === filterDate)
-            : orders; // If no filterDate, show all orders
+            : orders; 
 
         if (filteredOrders.length === 0) {
             financialHistoryTable.innerHTML = '<tr><td colspan="7" class="text-center py-4 text-gray-500">No financial data found for this date.</td></tr>';
@@ -451,60 +759,156 @@
             const salaryCost = order.price * 0.4;
 
             const row = document.createElement('tr');
-            row.className = 'border-b border-pink-100 hover:bg-pink-50';
+            row.className = 'border-b border-financial-table hover:bg-hover-financial-table';
             row.innerHTML = `
                 <td class="px-4 py-3">${order.date}</td>
                 <td class="px-4 py-3">${order.flavor}</td>
                 <td class="px-4 py-3">${order.topping}</td>
                 <td class="px-4 py-3">${order.quantity} PC${order.quantity > 1 ? 'S' : ''}</td>
                 <td class="px-4 py-3 font-semibold">₱${order.price}</td>
-                <td class="px-4 py-3 text-green-600">₱${ingredientsCost.toFixed(2)}</td>
-                <td class="px-4 py-3 text-blue-600">₱${salaryCost.toFixed(2)}</td>
+                <td class="px-4 py-3 text-summary-green">₱${ingredientsCost.toFixed(2)}</td>
+                <td class="px-4 py-3 text-summary-blue">₱${salaryCost.toFixed(2)}</td>
             `;
             financialHistoryTable.appendChild(row);
         });
     }
 
-    // New function to update the daily financial history table
-    function updateDailyFinancialHistoryTable() {
+    function updateDailyFinancialHistoryTable(filterDate = null) {
         dailyFinancialHistoryTable.innerHTML = '';
 
         // Group orders by date
         const dailySummary = orders.reduce((acc, order) => {
             if (!acc[order.date]) {
-                acc[order.date] = { totalSales: 0, ingredientsCost: 0, salaryCost: 0 };
+                acc[order.date] = { totalSales: 0, ingredientsCost: 0, salaryCost: 0, totalQuantity: 0 };
             }
             acc[order.date].totalSales += order.price;
             acc[order.date].ingredientsCost += (order.price * 0.6);
             acc[order.date].salaryCost += (order.price * 0.4);
+            acc[order.date].totalQuantity += parseInt(order.quantity);
             return acc;
         }, {});
 
+        let datesToDisplay = Object.keys(dailySummary);
+
+        // Apply filter if provided
+        if (filterDate) {
+            datesToDisplay = datesToDisplay.filter(date => date === filterDate);
+        }
+
         // Sort dates in descending order (most recent first)
-        const sortedDates = Object.keys(dailySummary).sort((a, b) => {
+        datesToDisplay.sort((a, b) => {
             // Convert MM/DD/YYYY to YYYYMMDD for proper sorting
             const dateA = new Date(a).getTime();
             const dateB = new Date(b).getTime();
             return dateB - dateA;
         });
 
-        if (sortedDates.length === 0) {
-            dailyFinancialHistoryTable.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-gray-500">No daily financial data available.</td></tr>';
+        if (datesToDisplay.length === 0) {
+            dailyFinancialHistoryTable.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-gray-500">No daily financial data available for this date.</td></tr>';
             return;
         }
 
-        sortedDates.forEach(date => {
+        datesToDisplay.forEach(date => {
             const summary = dailySummary[date];
             const row = document.createElement('tr');
-            row.className = 'border-b border-purple-100 hover:bg-purple-50';
+            row.className = 'border-b border-table-row hover:bg-hover-table-row';
             row.innerHTML = `
                 <td class="px-4 py-3">${date}</td>
+                <td class="px-4 py-3">${summary.totalQuantity} PCS</td>
                 <td class="px-4 py-3 font-semibold">₱${summary.totalSales}</td>
-                <td class="px-4 py-3 text-green-600">₱${summary.ingredientsCost.toFixed(2)}</td>
-                <td class="px-4 py-3 text-blue-600">₱${summary.salaryCost.toFixed(2)}</td>
+                <td class="px-4 py-3 text-summary-green">₱${summary.ingredientsCost.toFixed(2)}</td>
+                <td class="px-4 py-3 text-summary-blue">₱${summary.salaryCost.toFixed(2)}</td>
             `;
             dailyFinancialHistoryTable.appendChild(row);
         });
+    }
+
+    // NEW FUNCTION: Update Monthly Financial History Table
+    function updateMonthlyFinancialHistoryTable(filterMonth = null, filterYear = null) {
+        monthlyFinancialHistoryTable.innerHTML = '';
+
+        // Group orders by Month/Year
+        const monthlySummary = orders.reduce((acc, order) => {
+            const [month, day, year] = order.date.split('/');
+            const monthYearKey = `${month}/${year}`; // e.g., "01/2023"
+
+            if (!acc[monthYearKey]) {
+                acc[monthYearKey] = { totalSales: 0, ingredientsCost: 0, salaryCost: 0 };
+            }
+            acc[monthYearKey].totalSales += order.price;
+            acc[monthYearKey].ingredientsCost += (order.price * 0.6);
+            acc[monthYearKey].salaryCost += (order.price * 0.4);
+            return acc;
+        }, {});
+
+        let monthYearKeysToDisplay = Object.keys(monthlySummary);
+
+        // Apply filters if provided
+        if (filterMonth) {
+            monthYearKeysToDisplay = monthYearKeysToDisplay.filter(key => key.startsWith(`${filterMonth}/`));
+        }
+        if (filterYear) {
+            monthYearKeysToDisplay = monthYearKeysToDisplay.filter(key => key.endsWith(`/${filterYear}`));
+        }
+
+        // Sort by year (descending) then month (descending)
+        monthYearKeysToDisplay.sort((a, b) => {
+            const [monthA, yearA] = a.split('/');
+            const [monthB, yearB] = b.split('/');
+            if (yearA !== yearB) {
+                return parseInt(yearB) - parseInt(yearA);
+            }
+            return parseInt(monthB) - parseInt(monthA);
+        });
+
+        if (monthYearKeysToDisplay.length === 0) {
+            monthlyFinancialHistoryTable.innerHTML = '<tr><td colspan="4" class="text-center py-4 text-gray-500">No monthly financial data available for the selected period.</td></tr>';
+            return;
+        }
+
+        monthYearKeysToDisplay.forEach(monthYearKey => {
+            const summary = monthlySummary[monthYearKey];
+            const row = document.createElement('tr');
+            row.className = 'border-b border-table-row hover:bg-hover-table-row';
+            row.innerHTML = `
+                <td class="px-4 py-3">${monthYearKey}</td>
+                <td class="px-4 py-3 font-semibold">₱${summary.totalSales}</td>
+                <td class="px-4 py-3 text-summary-green">₱${summary.ingredientsCost.toFixed(2)}</td>
+                <td class="px-4 py-3 text-summary-blue">₱${summary.salaryCost.toFixed(2)}</td>
+            `;
+            monthlyFinancialHistoryTable.appendChild(row);
+        });
+    }
+
+    // NEW FUNCTION: Populate Year Filter
+    function populateYearFilter() {
+        const years = new Set();
+        orders.forEach(order => {
+            const [month, day, year] = order.date.split('/');
+            years.add(year);
+        });
+
+        // Clear existing options except "All Years"
+        monthlyFinancialYearFilter.innerHTML = '<option value="">All Years</option>';
+
+        // Add years in descending order
+        Array.from(years).sort((a, b) => parseInt(b) - parseInt(a)).forEach(year => {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            monthlyFinancialYearFilter.appendChild(option);
+        });
+    }
+
+
+    function updateOverallFinancialSummary() {
+        const totalSalesAllTime = orders.reduce((sum, order) => sum + order.price, 0);
+        const ingredientsCostAllTime = totalSalesAllTime * 0.6;
+        const salaryCostAllTime = totalSalesAllTime * 0.4;
+
+        overallTotalSalesEl.textContent = `₱${totalSalesAllTime}`;
+        overallIngredientsCostEl.textContent = `₱${ingredientsCostAllTime.toFixed(2)}`;
+        overallSalaryCostEl.textContent = `₱${salaryCostAllTime.toFixed(2)}`;
     }
 
 
@@ -519,7 +923,7 @@
             const formattedDate = `${month}/${day}/${year}`;
             updateHistoryTable(formattedDate);
         } else {
-            updateHistoryTable(); // If no filter, show all
+            updateHistoryTable(); 
         }
 
         const currentFinancialFilterDate = financialHistoryDateFilter.value;
@@ -528,10 +932,23 @@
             const formattedDate = `${month}/${day}/${year}`;
             updateFinancialHistoryTable(formattedDate);
         } else {
-            updateFinancialHistoryTable(); // If no filter, show all
+            updateFinancialHistoryTable(); 
         }
-        updateDailyFinancialHistoryTable(); // New: Update daily financial history table after removal
+        const currentDailyFinancialFilterDate = dailyFinancialHistoryDateFilter.value;
+        if (currentDailyFinancialFilterDate) {
+            const [year, month, day] = currentDailyFinancialFilterDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateDailyFinancialHistoryTable(formattedDate);
+        } else {
+            updateDailyFinancialHistoryTable();
+        }
+
+        // NEW: Update monthly financial history table after removal
+        updateMonthlyFinancialHistoryTable(monthlyFinancialMonthFilter.value, monthlyFinancialYearFilter.value);
+
+        updateOverallFinancialSummary(); 
         updateFinancialSummary();
+        populateYearFilter(); // Re-populate years in case the last order for a year was removed
     }
 
     function updateFinancialSummary() {
@@ -556,7 +973,7 @@
             const formattedDate = `${month}/${day}/${year}`;
             updateHistoryTable(formattedDate);
         } else {
-            updateHistoryTable(); // If filter is cleared, show all orders
+            updateHistoryTable(); 
         }
     });
 
@@ -569,9 +986,32 @@
             const formattedDate = `${month}/${day}/${year}`;
             updateFinancialHistoryTable(formattedDate);
         } else {
-            updateFinancialHistoryTable(); // If filter is cleared, show all financial history
+            updateFinancialHistoryTable(); 
         }
     });
+
+    // New Event listener for the daily financial history date filter
+    dailyFinancialHistoryDateFilter.addEventListener('change', (event) => {
+        const selectedDate = event.target.value; // Format: YYYY-MM-DD
+        if (selectedDate) {
+            // Convert YYYY-MM-DD to MM/DD/YYYY to match stored date format
+            const [year, month, day] = selectedDate.split('-');
+            const formattedDate = `${month}/${day}/${year}`;
+            updateDailyFinancialHistoryTable(formattedDate);
+        } else {
+            updateDailyFinancialHistoryTable(); 
+        }
+    });
+
+    // NEW: Event listeners for monthly financial history filters
+    monthlyFinancialMonthFilter.addEventListener('change', () => {
+        updateMonthlyFinancialHistoryTable(monthlyFinancialMonthFilter.value, monthlyFinancialYearFilter.value);
+    });
+
+    monthlyFinancialYearFilter.addEventListener('change', () => {
+        updateMonthlyFinancialHistoryTable(monthlyFinancialMonthFilter.value, monthlyFinancialYearFilter.value);
+    });
+
 
     // 🚀 Load orders on initial page load
     loadOrdersFromFirebase();
