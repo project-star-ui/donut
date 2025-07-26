@@ -768,6 +768,13 @@
                 </div>
             </div>
 
+            <!-- Add to Home Screen Button (Hidden by default) -->
+            <div class="text-center mt-10">
+                <button id="installAppButton" class="hidden bg-purple-600 hover:bg-purple-800 text-white font-bold py-2 px-4 md:py-3 md:px-6 rounded-full text-base md:text-xl transition duration-300 transform hover:scale-105 md:hover:scale-110 hover:shadow-lg">
+                    Install App 🚀
+                </button>
+            </div>
+
         </div>
     </div>
 
@@ -828,6 +835,50 @@
     const overallTotalSalesEl = document.getElementById('overallTotalSales'); 
     const overallIngredientsCostEl = document.getElementById('overallIngredientsCost'); 
     const overallSalaryCostEl = document.getElementById('overallSalaryCost'); 
+
+    // PWA Install Prompt Logic
+    let deferredPrompt;
+    const installAppButton = document.getElementById('installAppButton');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        // Prevent the mini-infobar from appearing on mobile
+        e.preventDefault();
+        // Stash the event so it can be triggered later.
+        deferredPrompt = e;
+        // Show our custom install button
+        installAppButton.classList.remove('hidden');
+        console.log('beforeinstallprompt event fired. Install button shown.');
+    });
+
+    installAppButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            // Hide the app install button
+            installAppButton.classList.add('hidden');
+            // Show the browser's native install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            const { outcome } = await deferredPrompt.userChoice;
+            // The prompt can only be used once, so clear it
+            deferredPrompt = null;
+            console.log(`User response to the install prompt: ${outcome}`);
+        }
+    });
+
+    // Event listener for when the PWA is successfully installed
+    window.addEventListener('appinstalled', () => {
+        // Hide the install button if the app is installed
+        installAppButton.classList.add('hidden');
+        console.log('PWA was successfully installed!');
+    });
+
+    // Check if the app is already running in standalone mode (i.e., installed)
+    if (window.matchMedia('(display-mode: standalone)').matches || navigator.standalone) {
+        console.log('Running in standalone mode (PWA is already installed).');
+        // Hide the install button if already installed
+        installAppButton.classList.add('hidden');
+    }
+    // End PWA Install Prompt Logic
+
 
     function getCurrentDate() {
         const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
